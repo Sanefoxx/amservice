@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.Objects;
+
 @Service
 @AllArgsConstructor
 public class CustomerService {
@@ -25,7 +27,7 @@ public class CustomerService {
                 customer.getId()
         );
 
-        if (fraudCheckResponse.isFraudster()) {
+        if (Objects.requireNonNull(fraudCheckResponse).isFraudster()) {
             throw new IllegalStateException("fraudster");
         }
 
