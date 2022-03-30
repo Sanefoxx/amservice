@@ -1,4 +1,4 @@
-package com.sanefox.fraud;
+package com.sanefox.clients.fraud;
 
 public record FraudCheckResponse(Boolean isFraudster) {
 }
