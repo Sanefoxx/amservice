@@ -13,7 +13,7 @@
     <module>fraud</module>
     <module>eureka-server</module>
     <module>clients</module>
-      <module>notification</module>
+    <module>notification</module>
   </modules>
 
   <name>amservices</name>
@@ -62,7 +62,7 @@
   </dependencies>
 
   <build>
-    <pluginManagement><!-- lwock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
+    <pluginManagement>
       <plugins>
         <plugin>
           <groupId>org.springframework.boot</groupId>
