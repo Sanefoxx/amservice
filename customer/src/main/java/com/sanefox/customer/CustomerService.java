@@ -1,5 +1,6 @@
 package com.sanefox.customer;
 
+import com.sanefox.amqp.RabbitMQMessageProducer;
 import com.sanefox.clients.fraud.FraudCheckResponse;
 import com.sanefox.clients.fraud.FraudClient;
 import com.sanefox.clients.notification.NotificationClient;
@@ -16,7 +17,7 @@ public class CustomerService {
 
     private CustomerRepository customerRepository;
     private final FraudClient fraudClient;
-    private final NotificationClient notificationClient;
+    private final RabbitMQMessageProducer rabbitMQMessageProducer;
 
     public void registerCustomer(CustomerRegistrationRequest request) {
         Customer customer = Customer.builder()
@@ -33,8 +34,10 @@ public class CustomerService {
             throw new IllegalStateException("fraudster");
         }
 
-        notificationClient.sendNotification(new NotificationRequest(customer.getId(), customer.getEmail(),
-                String.format("Hi %s", customer.getFirstName())));
+        NotificationRequest notificationRequest = new NotificationRequest(customer.getId(), customer.getEmail(),
+                String.format("Hi %s", customer.getFirstName()));
+
+        rabbitMQMessageProducer.publish(notificationRequest, "internal.exchange", "internal.notification.routing-key");
 
     }
 }
