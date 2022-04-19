@@ -1,0 +1,30 @@
+server:
+    port: 8082
+
+spring:
+    application:
+        name: notification
+    datasource:
+        username: 'sanefox'
+        url: jdbc:postgresql://postgres:5432/notification
+        password: 'password'
+    jpa:
+        properties:
+            hibernate:
+                dialect: org.hibernate.dialect.PostgreSQLDialect
+                format_sql: 'true'
+        hibernate:
+            ddl-auto: create-drop
+        show-sql: 'true'
+    zipkin:
+        base-url: http://zipkin:9411
+    rabbitmq:
+        addresses: rabbitmq:5672
+
+rabbitmq:
+    exchanges:
+        internal: internal.exchange
+    queues:
+        notification: notification.queue
+    routing-keys:
+        internal-notification: internal.notification.routing-key
